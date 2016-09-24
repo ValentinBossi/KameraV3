@@ -1,0 +1,107 @@
+<!-- views/pages/vorschau.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<% include ../partials/head %>
+</head>
+
+<body>
+
+	<header>
+		<% include ../partials/header %>
+	</header>
+
+	<div id="speichernPanel">
+		<table style="border-bottom: 2px solid black; margin-bottom: 0px;" class="table table-striped">
+			<tbody id="bilderZumSpeichern">
+
+			</tbody>
+		</table>
+	</div>
+
+
+
+	<main>
+
+		<!-- wenn alles OK ist: Es hat ein USB Stick und nicht am Kopieren-->
+		<% if(!systemStatus.amKopieren && systemStatus.usbOK){ %>
+			<div align="center" style="margin-top: 35px;"><button title="Datenträger auswerfen" id="datentraegerAuswerfen" style="width: 100px; height: 67px; border-radius: 20px; border: 0px; padding-bottom: ; padding-top:; background-color: #bc4b51;" class="btn btn-default"><span id="glyphiconDatentraeger" style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-eject"></span><br>USB</button></div>
+
+			<div align="center" style="margin-top: 25px; padding-top: 0px; padding-bottom: ; background-color:;">
+				<button title="Foto aufnehmen" style="width: 100px; height: 67px; border-radius: 20px; border: 0px; margin-bottom: ; background-color: #f4a259;" id="fotoMachen" class="btn btn-default"><span id="glyphiconFoto" style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-camera"></span></button>
+				<button title="Video aufnehmen" style="width: 100px; height: 67px; border-radius: 20px; border: 0px; margin-bottom: ; margin-top: ; margin-left: 100px; background-color: #f4a259;" id="videoMachen" class="btn btn-default"><span id="glyphiconVideo" style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-facetime-video"></span></button>
+			</div>
+			<div align="center" style="margin-top: 25px; padding-bottom: ; background-color:;">
+				<button title="Medien auf Datenträger speichern" id="aufDatentraegerSpeichern" style="width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color:#f4e285;" class="btn btn-default" id="aufUsbSpeichern"><span id="glyphiconSpeichern" style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-save"></span><br>Speichern</button>
+			</div>
+			<% }%>
+
+				<!-- wenn am Speichern-->
+				<% if(systemStatus.amKopieren){ %>
+					<div align="center" style="margin-top: 35px;"><button disabled="disabled" title="Datenträger auswerfen" id="datentraegerAuswerfen" style="width: 100px; height: 67px; border-radius: 20px; border: 0px; padding-bottom: ; padding-top:; background-color: #bc4b51;" class="btn btn-default" ><span id="glyphiconDatentraeger" style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-eject"></span><br>USB</button></div>
+
+					<div align="center" style="margin-top: 25px; padding-top: 0px; padding-bottom: ; background-color:;">
+						<button disabled="disabled" title="Foto aufnehmen" style="width: 100px; height: 67px; border-radius: 20px; border: 0px; margin-bottom: ; background-color: #f4a259;" id="fotoMachen" class="btn btn-default"><span id="glyphiconFoto" style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-camera"></span></button>
+						<button disabled="disabled" title="Video aufnehmen" style="width: 100px; height: 67px; border-radius: 20px; border: 0px; margin-bottom: ; margin-top: ; margin-left: 100px; background-color: #f4a259;" id="videoMachen" class="btn btn-default"><span id="glyphiconVideo" style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-facetime-video"></span></button>
+					</div>
+					<div align="center" style="margin-top: 25px;"><button disabled="disabled" title="Medien auf Datenträger speichern" id="aufDatentraegerSpeichern" style="width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color:#f4e285;" class="btn btn-default" id="aufUsbSpeichern" ><div style="vertical-align:middle;" class="loaderSpeichern"></div></button></div>
+					<% }%>
+
+						<!-- wenn kein Datenträger eingesteckt ist -->
+						<% if(!systemStatus.usbOK){ %>
+							<div align="center" style="margin-top: 35px;"><button disabled="disabled" title="Datenträger auswerfen" id="datentraegerAuswerfen" style="width: 100px; height: 67px; border-radius: 20px; border: 0px; padding-bottom: ; padding-top:; background-color: #bc4b51;" class="btn btn-default" ><span id="glyphiconDatenträger" style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-eject"></span><br>USB</button></div>
+
+							<div align="center" style="margin-top: 25px; padding-top: 0px; padding-bottom: ; background-color:;">
+								<button title="Foto aufnehmen" style="width: 100px; height: 67px; border-radius: 20px; border: 0px; margin-bottom: ; background-color: #f4a259;" id="fotoMachen" class="btn btn-default"><span id="glyphiconFoto" style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-camera"></span></button>
+								<button title="Video aufnehmen" style="width: 100px; height: 67px; border-radius: 20px; border: 0px; margin-bottom: ; margin-top: ; margin-left: 100px; background-color: #f4a259;" id="videoMachen" class="btn btn-default"><span id="glyphiconVideo" style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-facetime-video"></span></button>
+							</div>
+							<div align="center" style="margin-top: 25px; padding-bottom: ; background-color:;">
+								<button disabled="disabled" title="Medien auf Datenträger speichern" id="aufDatentraegerSpeichern" style="width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color:#f4e285;" class="btn btn-default" id="aufUsbSpeichern"><span id="glyphiconSpeichern" style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-save"></span><br>Speichern</button>
+							</div>
+							<% }%>
+
+								<div>
+
+									<h2 align='center'>Vorschau</h2>
+
+									<table class="table table-bordered">
+										<tr>
+											<td>
+												<table class="table table-bordered" id="letzterTable">
+													<% if (pictures.length) {%>
+														<% pictures.forEach(function(picture) { %>
+															<tr id="<%= picture.name %>">
+																<td style="border: 2px solid black;">
+																	<% if(picture.name.includes("mp4")){ %>
+																		<video width="100%" controls>
+																		<source src="pictures/<%= picture.name %>" type="video/mp4">
+																			Your browser does not support HTML5 video.
+																		</video>
+																		<% } else { %>
+																			<img align='center' src="pictures/<%= picture.name %>" style="width: 100%;">
+																			<% } %>
+																				<div align='center' style="background-color: black; color: white; padding-top: 5px; padding-bottom: 5px;"><%= picture.name %></div>
+																				<div align='center' style='margin-top: 10px; margin-bottom: 20px;'>
+																					<button title="Löschen" style='width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color:#bc4b51; margin-right: 10px;' class="btn btn-default" name="loeschen" data="<%= picture.name %>"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-trash"></span></button><button title="Download" name="download" style='width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color:#f4e285;' type="button" class="btn btn-default" href="<%= picture.name %>"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-cloud-download"></span></button>
+																				</div>
+																</td>
+															</tr>
+															<% }) %>
+															<% } %>
+												</table>
+											</td>
+										</tr>
+										<tr></tr>
+									</table>
+								</div>
+	</main>
+
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+
+</body>
+
+</html>

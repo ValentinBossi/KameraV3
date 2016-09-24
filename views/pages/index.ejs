@@ -1,0 +1,79 @@
+<!-- views/pages/vorschau.ejs -->
+
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+	<% include ../partials/head %>
+</head>
+
+<body id="body" onload="myFunction()" style="margin:0;">
+
+	<div id="mainLoader"></div>
+
+	<div id="speichernPanel">
+		<table style="border-bottom: 2px solid black; margin-bottom: 0px;" class="table table-striped">
+			<tbody id="bilderZumSpeichern">
+
+			</tbody>
+		</table>
+	</div>
+
+	<div style="display:none;" id="myDiv" class="animate-bottom">
+<div style="height:280px">
+		<button disabled="disabled" title="Datenträger auswerfen" id="datentraegerAuswerfen" style="position: absolute; top: 25px; left:50%; margin-left: -50px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #bc4b51;" class="btn btn-default"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-eject"></span><br>USB</button>
+
+
+					<button disabled="disabled" title="Foto aufnehmen" style="position: absolute; top: 117px; left:50%; margin-left: -150px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #f4a259;" id="fotoMachen" class="btn btn-default"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-camera"></span></button>
+
+					<label style="position: absolute; top: 117px; left:50%; margin-left: -30px;" class="switch"><input id="switchButton" type="checkbox" checked><div class="slider round"></div></label>
+							<div id="counter" style="position: absolute; top: 151px; left:50%; margin-left: -30px; width: 60px; height: 33px; text-align: center; vertical-align: middle; line-height: 33px;">00:00</div>
+
+
+					<button disabled="disabled" title="Video aufnehmen" style="position: absolute; top: 117px; left:50%; margin-left: 50px; width: 100px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #f4a259;" id="videoMachen" class="btn btn-default"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-facetime-video"></span></button>
+
+					<button disabled="disabled" title="Medien auf Datenträger speichern" id="aufDatentraegerSpeichern" style="position: absolute; top: 212px; left:50%; margin-left: -50px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color:#f4e285;" class="btn btn-default" id="aufUsbSpeichern"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-save"></span><br>Speichern</button>
+</div>
+									<h2 align='center'>Vorschau</h2>
+
+									<table class="table table-bordered">
+										<tr>
+											<td>
+												<table class="table table-bordered" id="letzterTable">
+												<h3 id="keineMedien" align="center"">Keine Medien!</h3>
+													<% if (pictures.length) {%>
+														<% pictures.forEach(function(picture) { %>
+															<tr id="<%= picture.name %>">
+																<td style="border: 2px solid black;">
+																	<% if(picture.name.includes("mp4")){ %>
+																		<video width="100%" controls>
+																		<source src="pictures/<%= picture.name %>" type="video/mp4">
+																			Your browser does not support HTML5 video.
+																		</video>
+																		<% } else { %>
+																			<img align='center' src="pictures/<%= picture.name %>" style="width: 100%;">
+																			<% } %>
+																				<div align='center' style="background-color: black; color: white; padding-top: 5px; padding-bottom: 5px;"><%= picture.name %></div>
+																				<div align='center' style='margin-top: 10px; margin-bottom: 20px;'>
+																					<button title="Löschen" style='width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color:#bc4b51; margin-right: 10px;' class="btn btn-default" name="loeschen" data="<%= picture.name %>"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-trash"></span></button><button title="Download" name="download" style='width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color:#f4e285;' type="button" class="btn btn-default" href="<%= picture.name %>"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-cloud-download"></span></button>
+																				</div>
+																</td>
+															</tr>
+															<% }) %>
+															<%}%>
+												</table>
+											</td>
+										</tr>
+									</table>
+									<button title="Kamera herunterfahren" id="ausschalten" style="top: 25px; left:50%; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #bc4b51;" class="btn btn-default"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-off"></span></button>
+								</div>
+
+	</div>
+
+	<footer>
+		<% include ../partials/footer %>
+	</footer>
+
+</body>
+
+</html>

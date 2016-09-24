@@ -1,0 +1,24 @@
+<!-- views/partials/head.ejs -->
+
+<meta charset="UTF-8">
+<meta content="width=device-width,initial-scale=1" name="viewport">
+<title>watchNow</title>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/spezific.css">
+<script>
+var myVar;
+
+function myFunction() {
+    myVar = setTimeout(showPage, 1500);
+}
+
+function showPage() {
+  document.getElementById("mainLoader").style.display = "none";
+  document.getElementById("myDiv").style.display = "block";
+}
+</script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="js/client2_0.js"></script>
