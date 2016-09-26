@@ -6,26 +6,12 @@ var morgan = require("morgan");
 var path = require("path");
 var exec = require('child_process').exec;
 var fs = require('fs');
-var spawn = require('child_process').spawn;
+//var spawn = require('child_process').spawn;
 const events = require("events");
 var emitter = new events.EventEmitter();
 
 var foto;
 var video;
-
-const auswerfenButtonParat = '<button title="Datenträger auswerfen" id="datentraegerAuswerfen" style="position: absolute; top: 25px; left:50%; margin-left: -50px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #bc4b51;" class="btn btn-default"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-eject"></span><br>USB</button>';
-const auswerfenButtonBusy = '<button disabled="disabled" title="Datenträger auswerfen" id="datentraegerAuswerfen" style="position: absolute; top: 25px; left:50%; margin-left: -50px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #bc4b51;" class="btn btn-default"><div style="vertical-align:middle;" class="loader"></div></button>';
-const auswerfenButtonDisabled = '<button disabled="disabled" title="Datenträger auswerfen" id="datentraegerAuswerfen" style="position: absolute; top: 25px; left:50%; margin-left: -50px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #bc4b51;" class="btn btn-default"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-eject"></span><br>USB</button>';
-const kopierenButtonParat = '<button title="Medien auf Datenträger speichern" id="aufDatentraegerSpeichern" style="position: absolute; top: 212px; left:50%; margin-left: -50px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color:#f4e285;" class="btn btn-default" id="aufUsbSpeichern"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-save"></span><br>Speichern</button>';
-const kopierenButtonBusy = '<button disabled="disabled" title="Medien auf Datenträger speichern" id="aufDatentraegerSpeichern" style="position: absolute; top: 212px; left:50%; margin-left: -50px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color:#f4e285;" class="btn btn-default" id="aufUsbSpeichern"><div style="vertical-align:middle;" class="loader"></div></button>';
-const kopierenButtonDisabled = '<button disabled="disabled" title="Medien auf Datenträger speichern" id="aufDatentraegerSpeichern" style="position: absolute; top: 212px; left:50%; margin-left: -50px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color:#f4e285;" class="btn btn-default" id="aufUsbSpeichern"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-save"></span><br>Speichern</button>';
-const videoButtonParat = '<button title="Video aufnehmen" style="position: absolute; top: 117px; left:50%; margin-left: 50px; width: 100px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #f4a259;" id="videoMachen" class="btn btn-default"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-facetime-video"></span></button>';
-const videoButtonBusy = '<button disabled="disabled" title="Video aufnehmen" style="position: absolute; top: 117px; left:50%; margin-left: 50px; width: 100px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #f4a259;" id="videoMachen" class="btn btn-default"><div style="vertical-align:middle;" class="loader"></div></button>';
-const videoButtonDisabled = '<button disabled="disabled" title="Video aufnehmen" style="position: absolute; top: 117px; left:50%; margin-left: 50px; width: 100px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #f4a259;" id="videoMachen" class="btn btn-default"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-facetime-video"></span></button>';
-const videoButtonRecording = '<button title="Video aufnehmen" style="position: absolute; top: 117px; left:50%; margin-left: 50px; width: 100px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #f4a259;" id="videoMachen" class="btn btn-default"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-record"></span></button>';
-const fotoButtonParat = '<button title="Foto aufnehmen" style="position: absolute; top: 117px; left:50%; margin-left: -150px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #f4a259;" id="fotoMachen" class="btn btn-default"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-camera"></span></button>';
-const fotoButtonBusy = '<button disabled="disabled" title="Foto aufnehmen" style="position: absolute; top: 117px; left:50%; margin-left: -150px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #f4a259;" id="fotoMachen" class="btn btn-default"><div style="vertical-align:middle;" class="loader"></div></button>';
-const fotoButtonDisabled = '<button disabled="disabled" title="Foto aufnehmen" style="position: absolute; top: 117px; left:50%; margin-left: -150px; width: 100px; height: 67px; border-radius: 20px; border: 0px; background-color: #f4a259;" id="fotoMachen" class="btn btn-default"><span style="font-size:2.5em; vertical-align:middle;" class="glyphicon glyphicon-camera"></span></button>';
 
 //app.use(express.static(path.resolve(__dirname, "/public")));
 
@@ -120,7 +106,7 @@ app.locals.systemStatus = systemStatus;
 // argumente noch optimieren!!!
 var fotoArgs = ["-t", "0", "-k", "-o", pathToMediaFolder + "bild.jpg", "-v", "-rot", "180", "-h", "2464", "-w", "3280"];
 //var videoArgs = ["-t", "0", "-fps", "301", "-k", "-i", "pause", "-o", pathToMediaFolder + "video.h264", "-v", "-rot", "180", "-p", "0,0,1640,1232", "-h", "1232", "-w", "1640" ];
-
+/**
 var kameraModus = function(modus) {
     console.log("kameraModus modus", modus);
     if (modus === "foto") {
@@ -146,7 +132,7 @@ var kameraModus = function(modus) {
         validateButtons("OK");
     }
 };
-kameraModus("foto");
+kameraModus("foto");**/
 
 var eventOut = function(modus){
     modus.stdout.on('data', function(data){
@@ -170,7 +156,7 @@ var eventEnd = function(modus){
 // OSX 'diskutil list | grep "FAT32"'
 // pi 'mount | grep "vfat"'
 var usbCheck = function() {
-    exec('mount | grep "/media/usb0"', function(error, stdout, stderr) {
+    exec('diskutil list | grep "FAT32"', function(error, stdout, stderr) {
         if (stdout.length > 0) {
             systemStatus.usbOK = true;
         } else {
@@ -294,7 +280,7 @@ io.on('connection', function(client) {
     client.on('datentraegerAuswerfen', function() {
         // pi 'sudo umount /media/usb0'
         // OSX diskutil umountDisk /dev/disk3
-        exec('sudo umount /media/usb0', function(error, stdout, stderr) {
+        exec('diskutil umountDisk /dev/disk3', function(error, stdout, stderr) {
             console.log('stdout ' + stdout);
             console.log('stderr ' + stderr);
             if (error !== null) {
